@@ -22,6 +22,7 @@ public class BraveCookie : MonoBehaviour
         if (collision.gameObject.CompareTag("Floor"))
         {
             animator.SetBool("Cookie_Jump", false);
+            animator.SetBool("Dobule_Jump", false);
         }
         
     }
