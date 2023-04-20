@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BraveCookie : PlayerController
+public class BraveCookie : MonoBehaviour
 {
+    Animator animator;
+
     void Start()
     {
-        PlayerHP();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -15,8 +17,12 @@ public class BraveCookie : PlayerController
 
     }
 
-    public override void PlayerHP()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        base.PlayerHP();
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            animator.SetBool("Cookie_Jump", false);
+        }
+        
     }
 }
