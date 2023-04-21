@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BackGroundMoveLeft : MonoBehaviour
+public class MoveLeft : MonoBehaviour
 {
     // 배경 이동 속도
     [SerializeField] private float speed;
