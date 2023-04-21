@@ -1,3 +1,4 @@
+using PlayerAnimationID;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +20,7 @@ public class SlideState : StateMachineBehaviour
 
         // 기본 상태 충돌 범위 및 offset
         _originColliderSize = _boxCollider2D.size;
-        _originOffset = _boxCollider2D.offset;
+        _originOffset = _boxCollider2D.offset; 
 
         // slide 충돌 범위 및 offset 
         _boxCollider2D.size = _slideSize;
@@ -30,7 +31,7 @@ public class SlideState : StateMachineBehaviour
         // S키를 때면 Slide를 멈추고 다시 달리는 상태로 전환한다.
         if (Input.GetKeyUp(KeyCode.S))
         {
-            animator.SetBool("Cookie_Slide", false);
+            animator.SetBool(PlayerAniID.IS_Slide, false);
         }
 
     }

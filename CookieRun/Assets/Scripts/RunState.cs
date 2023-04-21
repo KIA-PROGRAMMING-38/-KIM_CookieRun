@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using PlayerAnimationID;
 
 public class RunState : StateMachineBehaviour
 {
@@ -16,14 +17,14 @@ public class RunState : StateMachineBehaviour
         // Cookie 점프
         if(Input.GetKeyDown(KeyCode.W)) 
         {
-            animator.SetBool("Cookie_Jump", true);
+            animator.SetBool(PlayerAniID.IS_Jumping, true);
         }
 
         // Cookie 슬라이드
         // 누르고 있을 땐 계속 Slide가 진행되도록 설정한다.
         if(Input.GetKey(KeyCode.S))
         {
-            animator.SetBool("Cookie_Slide", true);
+            animator.SetBool(PlayerAniID.IS_Slide, true);
             
         }
     }
@@ -32,5 +33,4 @@ public class RunState : StateMachineBehaviour
     {
 
     }
-
 }
