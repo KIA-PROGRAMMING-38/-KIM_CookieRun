@@ -6,7 +6,7 @@ using UnityEngine;
 public class BraveCookie : PlayerController
 {
     Animator animator;
-    private void Start()
+    public void Start()
     {
         animator = GetComponent<Animator>();
         PlayerHP(20);
@@ -16,7 +16,7 @@ public class BraveCookie : PlayerController
     // Update is called once per frame
     void Update()
     {
-        PlayerDeath();
+
     }
 
     public override void PlayerHP(int Health)
@@ -26,12 +26,7 @@ public class BraveCookie : PlayerController
 
     public override void PlayerTakeDamageState(int damage)
     {
-        base.PlayerTakeDamageState(10);
-    }
-
-    public override void PlayerDeath()
-    {
-        base.PlayerDeath();
+        base.PlayerTakeDamageState(damage);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -48,7 +43,6 @@ public class BraveCookie : PlayerController
         if (collision.CompareTag("Obstacles") && !_invincible)
         {
             animator.SetTrigger(PlayerAniID.IS_TakeDamage);
-            PlayerTakeDamageState(10);
         }
     }
 }

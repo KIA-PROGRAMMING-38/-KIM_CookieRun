@@ -5,38 +5,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-//스크립트 생성
-//[System.Serializable]
-//public class CookieData
-//{
-//    public int hp;
-//}
-
-//스크립트 생성
-//public class CookieResourceData
-//{
-//    public string animationPath;
-//}
-
-//스크립트 생성
-
-//[CreateAssetMenu(fileName = "Test", menuName = "Test/Test")]
-//public class Testsss : ScriptableObject
-//{
-//    public CookieData data;
-//    public CookieResourceData data2;
-//}
-
-//public class Cookie
-//{
-//    CookieData data;
-
-//    public Init(CookieData data, CookieResourceData data2)
-//    {
-//        this.data = data;
-//    }
-//}
-
 public class PlayerController : MonoBehaviour
 {
     Animator animator;
@@ -59,7 +27,6 @@ public class PlayerController : MonoBehaviour
     protected Color _halfAlpha = new Color(1, 1, 1, 0.5f);
     protected Color _fullAlpha = new Color(1, 1, 1, 1);
 
-
     // BraveCookie에서 코루틴을 Start에서 실행하기 때문에, 같이 Start 함수에 작성하면 로직이 꼬이게 된다.
     // 그래서 그런 버그를 방지하기 위해 Awake 함수에 작성한다.
     // 상속 받은 BraveCookie에서 Awake에 컴포넌트를 참조 받는다면 routine is null 이라는 오류가 발생한다.
@@ -72,9 +39,8 @@ public class PlayerController : MonoBehaviour
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        //Debug.Log(Resources.Load<타입>("경로");
-    }
 
+    }
     public virtual void PlayerHP(int Health)
     {
         HP = Health;
@@ -86,19 +52,31 @@ public class PlayerController : MonoBehaviour
         if (!_hurt)
         {
             HP -= damage;
+            if (HP <= 0)
+            {
+                PlayerDeath(2);
+            }
             _hurt = true;
             _invincible = true;
             StartCoroutine(InvincibleState);
             StartCoroutine(Alpha);
         }
     }
-
     // 플레이어가 장애물과 충돌하지 않은 상태에서 사망함.
-    public virtual void PlayerDeath()
+    public void PlayerDeath(int number)
     {
         if(HP <= 0)
         {
-            animator.SetTrigger(PlayerAniID.IS_PlayerDeath);
+            // 플레이어가 죽는 상황이 다르기 때문에 주어지 상황을 다르게 만든다.
+            if(number == 1)
+            {
+                animator.SetTrigger(PlayerAniID.IS_PlayerDeath);
+            }
+            else if (number == 2)
+            {
+                animator.SetTrigger(PlayerAniID.IS_PlayCrashDeath);
+            }
+           
         }
     }
     // 코루틴
@@ -109,6 +87,10 @@ public class PlayerController : MonoBehaviour
         {
             yield return waitForSeconds;
             HP -= 1;
+            if (HP <= 0)
+            {
+                PlayerDeath(1);
+            }
             Debug.Log("-1 감소");
         }
     }
