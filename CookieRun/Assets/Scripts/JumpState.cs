@@ -1,3 +1,4 @@
+using PlayerAnimationID;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +20,7 @@ public class JumpState : StateMachineBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            animator.SetBool("Dobule_Jump", true);
+            animator.SetBool(PlayerAniID.IS_DobuleJumping, true);
         }
     }
 
