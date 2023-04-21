@@ -12,6 +12,8 @@ namespace PlayerAnimationID
         public static readonly int IS_Jumping = Animator.StringToHash("Cookie_Jump");
         public static readonly int IS_DobuleJumping = Animator.StringToHash("Dobule_Jump");
         public static readonly int IS_Slide = Animator.StringToHash("Cookie_Slide");
-        public static readonly int IS_TakeDamage = Animator.StringToHash("Cookie_TakeDamge");
+        public static readonly int IS_TakeDamage = Animator.StringToHash("Cookie_TakeDamage");
+        public static readonly int IS_PlayerDeath = Animator.StringToHash("Cookie_Die");
+        public static readonly int IS_PlayCrashDeath = Animator.StringToHash("Cookie_CrashDeath");
     }
 }

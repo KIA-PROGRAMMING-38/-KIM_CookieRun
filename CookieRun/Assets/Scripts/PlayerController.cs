@@ -1,3 +1,5 @@
+using Mono.Cecil.Cil;
+using PlayerAnimationID;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -37,23 +39,26 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    Animator animator;
+
     // 플레이어 체력 1초마다 1씩 감소
-    protected int HP;
+    public int HP { get; private set; }
     IEnumerator playerHealthDecrease;
     WaitForSeconds waitForSeconds = new WaitForSeconds(1);
 
     // 플레이어 무적 상태
-    //IEnumerator InvicibleState;
+    IEnumerator InvincibleState;
     WaitForSeconds InvicibleWaitForSeconds = new WaitForSeconds(3);
     protected bool _hurt;
-    protected bool _invicible;
+    protected bool _invincible;
 
     // 플레이어의 무적상태를 Alpha를 통해 알려준다.
-    //IEnumerator Alpha;
+    IEnumerator Alpha;
     WaitForSeconds AlphaSeconds = new WaitForSeconds(0.1f);
     protected SpriteRenderer _spriteRenderer;
     protected Color _halfAlpha = new Color(1, 1, 1, 0.5f);
     protected Color _fullAlpha = new Color(1, 1, 1, 1);
+
 
     // BraveCookie에서 코루틴을 Start에서 실행하기 때문에, 같이 Start 함수에 작성하면 로직이 꼬이게 된다.
     // 그래서 그런 버그를 방지하기 위해 Awake 함수에 작성한다.
@@ -62,12 +67,14 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         playerHealthDecrease = PlayerHealthDecrease();
-        //InvicibleState = Invicible();
-        //Alpha = AlphaBlink();
+        InvincibleState = Invincible();
+        Alpha = AlphaBlink();
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         //Debug.Log(Resources.Load<타입>("경로");
     }
+
     public virtual void PlayerHP(int Health)
     {
         HP = Health;
@@ -80,10 +87,18 @@ public class PlayerController : MonoBehaviour
         {
             HP -= damage;
             _hurt = true;
-            _invicible = true;
-            StartCoroutine(Invicible());
-            StartCoroutine(AlphaBlink());
-            Debug.Log("무적 상태");
+            _invincible = true;
+            StartCoroutine(InvincibleState);
+            StartCoroutine(Alpha);
+        }
+    }
+
+    // 플레이어가 장애물과 충돌하지 않은 상태에서 사망함.
+    public virtual void PlayerDeath()
+    {
+        if(HP <= 0)
+        {
+            animator.SetTrigger(PlayerAniID.IS_PlayerDeath);
         }
     }
     // 코루틴
@@ -99,24 +114,46 @@ public class PlayerController : MonoBehaviour
     }
 
     // 무적상태 코루틴
-    IEnumerator Invicible()
+    // 코루틴 로직을 while(true)문 안에 가둔다.
+    // 그렇게 되면 StopCoroutine함수가 yield return null에서 종료되어도
+    // 다음 코루틴 호출 될 시 while문 덕분에 다시 처음 맨 위로 돌아갈 수 있다.
+    IEnumerator Invincible()
     {
-        yield return InvicibleWaitForSeconds;
-        _hurt = false;
-        _invicible = false;
-        Debug.Log("Invicible 코루틴");
-    }
+        while(true)
+        {
+            // 로직
+            yield return InvicibleWaitForSeconds;
+            _hurt = false;
+            _invincible = false;
 
+            // StopCoroutine은 다음 프레임에서 종료된다. 그러므로 밑에 yield return null문에서 종료된다.
+            // 만약 yield return null문이 없다면 다음 프레임인 yield return InvicibleWaitForSeconds문에서 종료된다.
+            // 그렇게 되면 다음 코루틴 시작할 때 _hurt = false문이 제일 먼저 실행되는 상황이 발생한다.
+            // 그러므로 yield return null문을 사용해서 StopCoroutine문이 종료 될 지점을 만들어주는 것이다.
+            StopCoroutine(InvincibleState);
+
+            yield return null;
+        }
+    }
     // 무적상태를 Sprite Render로 알려주는 코루틴
     IEnumerator AlphaBlink()
     {
-        while (_hurt)
+        while(true)
         {
-            yield return AlphaSeconds;
-            _spriteRenderer.color = _halfAlpha;
+            // 로직
+            while (_hurt)
+            {
+                yield return AlphaSeconds;
+                _spriteRenderer.color = _halfAlpha;
 
-            yield return AlphaSeconds;
-            _spriteRenderer.color = _fullAlpha;
+                yield return AlphaSeconds;
+                _spriteRenderer.color = _fullAlpha;
+            }
+            
+            // 코루틴을 종료한다.
+            StopCoroutine(Alpha);
+
+            yield return null;
         }
     }
 }
