@@ -16,6 +16,7 @@ public class Obstacles : MonoBehaviour
         
     }
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // 플레이어에 충돌을 감지하고, 충돌 했을 시 데미지를 넘긴다.

@@ -36,4 +36,5 @@ public class BraveCookie : PlayerController
             animator.SetBool(PlayerAniID.IS_DobuleJumping, false);
         }
     }
+ 
 }

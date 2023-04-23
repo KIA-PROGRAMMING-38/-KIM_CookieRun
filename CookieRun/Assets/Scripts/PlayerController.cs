@@ -45,12 +45,16 @@ public class PlayerController : MonoBehaviour
         HP = Health;
         StartCoroutine(playerHealthDecrease);
     }
-
     public virtual void PlayerTakeDamageState(int damage)
     {
         if (!_hurt)
         {
             animator.SetTrigger(PlayerAniID.IS_TakeDamage);
+
+            // 플레이어가 충돌로 데미지를 받으면 어떤 상태이든, 달리기 상태로 돌아와야한다.
+            animator.SetBool(PlayerAniID.IS_Jumping, false);
+            animator.SetBool(PlayerAniID.IS_DobuleJumping, false);
+            animator.SetBool(PlayerAniID.IS_Slide, false);
             HP -= damage;
             if (HP <= 0)
             {

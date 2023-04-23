@@ -1562,13 +1562,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Postion Obstacles-red
       objectReference: {fileID: 0}
+    - target: {fileID: 2876391433984572473, guid: 445fd02718319e64b93d17c0a0ea2dc6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2876391433984572479, guid: 445fd02718319e64b93d17c0a0ea2dc6, type: 3}
       propertyPath: m_RootOrder
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2876391433984572479, guid: 445fd02718319e64b93d17c0a0ea2dc6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.4040003
+      value: 11.32
       objectReference: {fileID: 0}
     - target: {fileID: 2876391433984572479, guid: 445fd02718319e64b93d17c0a0ea2dc6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1665,7 +1669,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6166459642143705965, guid: 4668a4aab770d1141a5796a836d6feb6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4668a4aab770d1141a5796a836d6feb6, type: 3}
@@ -1676,13 +1680,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7771778764800085715, guid: ce6146ea3a8fee64397b18e97ad9551c, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7771778764800085719, guid: ce6146ea3a8fee64397b18e97ad9551c, type: 3}
       propertyPath: m_Name
       value: Pincer obstacles
       objectReference: {fileID: 0}
     - target: {fileID: 7771778764800085719, guid: ce6146ea3a8fee64397b18e97ad9551c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7771778764800085724, guid: ce6146ea3a8fee64397b18e97ad9551c, type: 3}
       propertyPath: m_RootOrder
