@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour
     IEnumerator InvincibleState;
     WaitForSeconds InvicibleWaitForSeconds = new WaitForSeconds(3);
     protected bool _hurt;
-    protected bool _invincible;
 
     // 플레이어의 무적상태를 Alpha를 통해 알려준다.
     IEnumerator Alpha;
@@ -51,6 +50,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!_hurt)
         {
+            animator.SetTrigger(PlayerAniID.IS_TakeDamage);
             HP -= damage;
             if (HP <= 0)
             {
@@ -58,7 +58,6 @@ public class PlayerController : MonoBehaviour
                 PlayerDeath(2);
             }
             _hurt = true;
-            _invincible = true;
             StartCoroutine(InvincibleState);
             StartCoroutine(Alpha);
         }
@@ -107,7 +106,6 @@ public class PlayerController : MonoBehaviour
             // 로직
             yield return InvicibleWaitForSeconds;
             _hurt = false;
-            _invincible = false;
 
             // StopCoroutine은 다음 프레임에서 종료된다. 그러므로 밑에 yield return null문에서 종료된다.
             // 만약 yield return null문이 없다면 다음 프레임인 yield return InvicibleWaitForSeconds문에서 종료된다.
