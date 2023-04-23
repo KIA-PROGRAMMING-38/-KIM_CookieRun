@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour
             HP -= damage;
             if (HP <= 0)
             {
+                
                 PlayerDeath(2);
             }
             _hurt = true;
@@ -135,7 +136,11 @@ public class PlayerController : MonoBehaviour
             // 코루틴을 종료한다.
             StopCoroutine(Alpha);
 
+            // StopCoroutine은 다음 프레임에서 종료한다.
+            // 종료 지점은 yield return null이다. 이렇게 만들어줌으로써
+            // 다음 코루틴 시작할 때, while문 로직을 다시 실행 시킨다.
             yield return null;
         }
     }
+    
 }

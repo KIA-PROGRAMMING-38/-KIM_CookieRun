@@ -43,6 +43,7 @@ public class BraveCookie : PlayerController
         if (collision.CompareTag("Obstacles") && !_invincible)
         {
             animator.SetTrigger(PlayerAniID.IS_TakeDamage);
+            Debug.Log("面倒 贸府 局聪皋捞记 柳青");
         }
     }
 }
