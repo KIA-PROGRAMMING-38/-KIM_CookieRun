@@ -83,6 +83,11 @@ public class PlayerController : MonoBehaviour
            
         }
     }
+
+    public void PlayerIncreaseHP(int healthUP)
+    {
+        HP += healthUP;
+    }
     // 코루틴
     // 1초마다 플레이어 체력을 1씩 감소시킨다.
     IEnumerator PlayerHealthDecrease()
