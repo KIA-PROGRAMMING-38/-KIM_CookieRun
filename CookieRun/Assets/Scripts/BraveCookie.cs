@@ -9,7 +9,7 @@ public class BraveCookie : PlayerController
     public void Start()
     {
         animator = GetComponent<Animator>();
-        PlayerHP(100);
+        PlayerHP(10);
     }
 
     // Update is called once per frame
