@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private List<GameObject> _jelly;
     [SerializeField] private TextMeshProUGUI _scoreText;
+
+    // 오브젝트 풀링
+    // [field: SerializeField] public JellyPooler JellyPooler { get; private set; }
     private int _score;
 
     private void Awake()

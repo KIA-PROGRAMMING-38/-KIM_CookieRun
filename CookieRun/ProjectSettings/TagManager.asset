@@ -7,17 +7,19 @@ TagManager:
   - Floor
   - Obstacles
   - GameManager
+  - Jelly
+  - MagnetRange
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Magnet
   - Water
   - UI
   - Player
   - Obstacles
   - Jelly
-  - 
+  - Item
   - 
   - 
   - 

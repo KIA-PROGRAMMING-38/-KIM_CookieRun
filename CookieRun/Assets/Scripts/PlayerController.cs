@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
     private int _maxHP = 100;
     private int _minHP = 0;
 
+    // 자석 센서
+    [SerializeField] private MagnetSensor magnetSensor;
+    
     // BraveCookie에서 코루틴을 Start에서 실행하기 때문에, 같이 Start 함수에 작성하면 로직이 꼬이게 된다.
     // 그래서 그런 버그를 방지하기 위해 Awake 함수에 작성한다.
     // 상속 받은 BraveCookie에서 Awake에 컴포넌트를 참조 받는다면 routine is null 이라는 오류가 발생한다.
@@ -88,11 +91,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // 체력 증진
     public void PlayerIncreaseHP(int healthUP)
     {
         HP += healthUP;
         HP = Mathf.Clamp(HP, _minHP, _maxHP);
     }
+
+    // 자석 아이템 
+    public void ActiveMagnet()
+    {
+        magnetSensor.gameObject.SetActive(true);
+    }
+
     // 코루틴
     // 1초마다 플레이어 체력을 1씩 감소시킨다.
     IEnumerator PlayerHealthDecrease()
@@ -105,7 +116,6 @@ public class PlayerController : MonoBehaviour
             {
                 PlayerDeath(1);
             }
-            Debug.Log("-1 감소");
         }
     }
 
