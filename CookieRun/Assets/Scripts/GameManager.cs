@@ -8,8 +8,13 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
 
+    // 젤리 점수
     [SerializeField] private List<GameObject> _jelly;
     [SerializeField] private TextMeshProUGUI _scoreText;
+
+    // 이동 속도
+    public float speed = 5f;
+    public bool _dashSpeed;
 
     // 오브젝트 풀링
     // [field: SerializeField] public JellyPooler JellyPooler { get; private set; }
@@ -18,6 +23,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         var objs = FindObjectsOfType<GameManager>();
+
         if(objs.Length != 1)
         {
             Destroy(gameObject);
@@ -41,6 +47,7 @@ public class GameManager : MonoBehaviour
         _score += scoreToAdd;
         _scoreText.text = "" + _score;
     }
+
     public static GameManager Instance
     {
         get
@@ -61,4 +68,5 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
+    
 }

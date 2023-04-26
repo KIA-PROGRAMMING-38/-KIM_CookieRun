@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DobuleJump : StateMachineBehaviour
+public class DoubleJump : StateMachineBehaviour
 {
     private Rigidbody2D _rigidbody2D;
     private Vector2 _doubleJump = Vector2.up;

@@ -26,7 +26,7 @@ public class JumpState : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
+      
     }
    
 }

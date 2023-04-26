@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     // 플레이어 무적 상태
     IEnumerator InvincibleState;
     WaitForSeconds InvicibleWaitForSeconds = new WaitForSeconds(3);
-    protected bool _hurt;
+    protected bool hurt;
 
     // 플레이어의 무적상태를 Alpha를 통해 알려준다.
     IEnumerator Alpha;
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
     // 자석 센서
     [SerializeField] private MagnetSensor magnetSensor;
-    
+
     // BraveCookie에서 코루틴을 Start에서 실행하기 때문에, 같이 Start 함수에 작성하면 로직이 꼬이게 된다.
     // 그래서 그런 버그를 방지하기 위해 Awake 함수에 작성한다.
     // 상속 받은 BraveCookie에서 Awake에 컴포넌트를 참조 받는다면 routine is null 이라는 오류가 발생한다.
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
     }
     public virtual void PlayerTakeDamageState(int damage)
     {
-        if (!_hurt)
+        if (!hurt)
         {
             animator.SetTrigger(PlayerAniID.IS_TakeDamage);
 
@@ -65,21 +65,33 @@ public class PlayerController : MonoBehaviour
             HP -= damage;
             if (HP <= 0)
             {
-                
+
                 PlayerDeath(2);
             }
-            _hurt = true;
+            hurt = true;
             StartCoroutine(InvincibleState);
             StartCoroutine(Alpha);
         }
     }
+
+    // 플레이어 무적 상태
+    public virtual void PlayerInvinvibleState()
+    {
+        hurt = true;
+        animator.SetBool(PlayerAniID.IS_PlayDashRun, true);
+        if (hurt)
+        {
+            StartCoroutine(DashRunCooltime());
+        }
+
+    }
     // 플레이어가 장애물과 충돌하지 않은 상태에서 사망함.
     public void PlayerDeath(int number)
     {
-        if(HP <= 0)
+        if (HP <= 0)
         {
             // 플레이어가 죽는 상황이 다르기 때문에 주어지 상황을 다르게 만든다.
-            if(number == 1)
+            if (number == 1)
             {
                 animator.SetTrigger(PlayerAniID.IS_PlayerDeath);
             }
@@ -87,7 +99,7 @@ public class PlayerController : MonoBehaviour
             {
                 animator.SetTrigger(PlayerAniID.IS_PlayCrashDeath);
             }
-           
+
         }
     }
 
@@ -125,11 +137,11 @@ public class PlayerController : MonoBehaviour
     // 다음 코루틴 호출 될 시 while문 덕분에 다시 처음 맨 위로 돌아갈 수 있다.
     IEnumerator Invincible()
     {
-        while(true)
+        while (true)
         {
             // 로직
             yield return InvicibleWaitForSeconds;
-            _hurt = false;
+            hurt = false;
 
             // StopCoroutine은 다음 프레임에서 종료된다. 그러므로 밑에 yield return null문에서 종료된다.
             // 만약 yield return null문이 없다면 다음 프레임인 yield return InvicibleWaitForSeconds문에서 종료된다.
@@ -143,10 +155,10 @@ public class PlayerController : MonoBehaviour
     // 무적상태를 Sprite Render로 알려주는 코루틴
     IEnumerator AlphaBlink()
     {
-        while(true)
+        while (true)
         {
             // 로직
-            while (_hurt)
+            while (hurt)
             {
                 yield return AlphaSeconds;
                 _spriteRenderer.color = _halfAlpha;
@@ -154,7 +166,7 @@ public class PlayerController : MonoBehaviour
                 yield return AlphaSeconds;
                 _spriteRenderer.color = _fullAlpha;
             }
-            
+
             // 코루틴을 종료한다.
             StopCoroutine(Alpha);
 
@@ -164,5 +176,15 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
     }
-    
+
+    IEnumerator DashRunCooltime()
+    {
+        yield return InvicibleWaitForSeconds;
+        animator.SetBool(PlayerAniID.IS_PlayDashRun, false);
+        hurt = false;
+
+        StopCoroutine(DashRunCooltime());
+
+        yield return null;
+    }
 }
