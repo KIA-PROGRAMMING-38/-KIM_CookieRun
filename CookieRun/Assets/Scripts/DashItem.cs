@@ -8,7 +8,7 @@ public class DashItem : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameManager.Instance._dashSpeed = true;
+        GameManager.Instance.DashItemCooltime();
         collision.gameObject.GetComponent<PlayerController>().PlayerInvinvibleState();
         gameObject.SetActive(false);
     }
