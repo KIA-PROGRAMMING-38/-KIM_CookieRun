@@ -11,7 +11,7 @@ public class MoveLeft : MonoBehaviour
     private Vector2 leftMove = Vector2.left;
 
     // 이동 속도 증가
-    private float speedUP = 0.2f;
+    private float speedUP = 2f;
 
     IEnumerator DashItemCooltime;
     WaitForSeconds waitForSeconds = new WaitForSeconds(3);
@@ -40,7 +40,7 @@ public class MoveLeft : MonoBehaviour
     {
         while (GameManager.Instance._dashSpeed)
         {
-            transform.Translate(leftMove * Time.timeScale * speedUP);
+            transform.Translate(leftMove * Time.deltaTime * GameManager.Instance.speed * speedUP);
             yield return waitForSeconds;
             GameManager.Instance._dashSpeed = false;
 
