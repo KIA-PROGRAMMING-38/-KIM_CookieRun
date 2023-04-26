@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     Animator animator;
+    ParticleSystem DashPartice;
 
     // 플레이어 체력 1초마다 1씩 감소
     public int HP { get; private set; }
@@ -45,8 +46,10 @@ public class PlayerController : MonoBehaviour
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        DashPartice = GetComponentInChildren<ParticleSystem>();
 
     }
+  
     public virtual void PlayerHP(int Health)
     {
         HP = Health;
@@ -180,6 +183,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator DashRunCooltime()
     {
         yield return InvicibleWaitForSeconds;
+        DashPartice.Stop();
         animator.SetBool(PlayerAniID.IS_PlayDashRun, false);
         hurt = false;
 

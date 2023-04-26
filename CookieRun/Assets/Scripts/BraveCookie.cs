@@ -6,9 +6,11 @@ using UnityEngine;
 public class BraveCookie : PlayerController
 {
     Animator animator;
+    [SerializeField] private ParticleSystem DashParticle;
     public void Start()
     {
         animator = GetComponent<Animator>();
+        DashParticle = GetComponentInChildren<ParticleSystem>();    
         PlayerHP(100);
     }
 
@@ -30,6 +32,8 @@ public class BraveCookie : PlayerController
 
     public override void PlayerInvinvibleState()
     {
+        //Instantiate(DashParticle, transform.position, Quaternion.identity);
+        DashParticle.Play();
         base.PlayerInvinvibleState();
     }
 
