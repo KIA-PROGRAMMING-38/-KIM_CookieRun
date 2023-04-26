@@ -15,7 +15,7 @@ public class BraveCookie : PlayerController
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public override void PlayerHP(int Health)
@@ -26,6 +26,11 @@ public class BraveCookie : PlayerController
     public override void PlayerTakeDamageState(int damage)
     {
         base.PlayerTakeDamageState(damage);
+    }
+
+    public override void PlayerInvinvibleState()
+    {
+        base.PlayerInvinvibleState();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

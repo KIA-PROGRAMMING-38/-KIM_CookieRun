@@ -15,5 +15,6 @@ namespace PlayerAnimationID
         public static readonly int IS_TakeDamage = Animator.StringToHash("Cookie_TakeDamage");
         public static readonly int IS_PlayerDeath = Animator.StringToHash("Cookie_Die");
         public static readonly int IS_PlayCrashDeath = Animator.StringToHash("Cookie_CrashDeath");
+        public static readonly int IS_PlayDashRun = Animator.StringToHash("Cookie_DashRun");
     }
 }

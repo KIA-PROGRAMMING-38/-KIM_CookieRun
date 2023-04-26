@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MagnetSensor : MonoBehaviour
 {
+    WaitForSeconds waitForSeconds = new WaitForSeconds(3);
     private void OnEnable()
     {
         StartCoroutine(DurationTime());
@@ -12,7 +13,7 @@ public class MagnetSensor : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(3);
+            yield return waitForSeconds;
             gameObject.SetActive(false);
 
             StopCoroutine(DurationTime());
