@@ -9,6 +9,7 @@ TagManager:
   - GameManager
   - Jelly
   - MagnetRange
+  - Range
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Obstacles
   - Jelly
   - Item
-  - 
+  - Range
   - 
   - 
   - 

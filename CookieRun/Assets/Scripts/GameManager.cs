@@ -8,12 +8,15 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
 
+    // Game Over
+    public bool GameOver;
+
     // 젤리 점수
     [SerializeField] private List<GameObject> _jelly;
     [SerializeField] private TextMeshProUGUI _scoreText;
 
     // 이동 속도
-    public float speed = 10f;
+    public float speed;
 
     // 오브젝트 풀링
     // [field: SerializeField] public JellyPooler JellyPooler { get; private set; }
@@ -22,8 +25,10 @@ public class GameManager : MonoBehaviour
     // Dash시간
     WaitForSeconds waitForSeconds = new WaitForSeconds(3);
 
+
     private void Awake()
     {
+        GameOver = false;
         var objs = FindObjectsOfType<GameManager>();
 
         if (objs.Length != 1)
@@ -78,11 +83,9 @@ public class GameManager : MonoBehaviour
 
     IEnumerator DashItemDuration()
     {
-        speed = 20;
-        Debug.Log(speed);
-        yield return waitForSeconds;
         speed = 10;
-        Debug.Log(speed);
+        yield return waitForSeconds;
+        speed = 5;
 
         StopCoroutine(DashItemDuration());
         yield return null;

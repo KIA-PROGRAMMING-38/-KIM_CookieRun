@@ -1,3 +1,4 @@
+using Mono.Cecil.Cil;
 using PlayerAnimationID;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,18 @@ public class MoveLeft : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(leftMove * Time.deltaTime * GameManager.Instance.speed);
+        moveLeft();
+    }
+
+    public void moveLeft()
+    {
+        if(GameManager.Instance.GameOver == false)
+        {
+            transform.Translate(leftMove * Time.deltaTime * GameManager.Instance.speed);
+        }
+        else if(GameManager.Instance.GameOver == true)
+        {
+            transform.Translate(leftMove * Time.deltaTime * 0f);
+        }
     }
 }
