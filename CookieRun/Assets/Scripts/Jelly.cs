@@ -21,7 +21,7 @@ public class Jelly : MonoBehaviour
     }
 
     // 오브젝트 풀링
-    // public void SetPool(ObjectPool<Jelly> pool) => _pool = pool;
+    public void SetPool(ObjectPool<Jelly> pool) => _pool = pool;
 
     //public void Reset()
     //{

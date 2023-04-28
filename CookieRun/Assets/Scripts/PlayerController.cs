@@ -68,8 +68,8 @@ public class PlayerController : MonoBehaviour
             HP -= damage;
             if (HP <= 0)
             {
-
-                PlayerDeath(2);
+                GameManager.Instance.GameOver = true;
+                PlayerDeathAnimation(2);
             }
             hurt = true;
             StartCoroutine(InvincibleState);
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
 
     }
     // 플레이어가 장애물과 충돌하지 않은 상태에서 사망함.
-    public void PlayerDeath(int number)
+    public void PlayerDeathAnimation(int number)
     {
         if (HP <= 0)
         {
@@ -129,7 +129,8 @@ public class PlayerController : MonoBehaviour
             HP -= 1;
             if (HP <= 0)
             {
-                PlayerDeath(1);
+                PlayerDeathAnimation(1);
+                GameManager.Instance.GameOver = true;
             }
         }
     }
